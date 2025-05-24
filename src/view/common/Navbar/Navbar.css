@@ -1,0 +1,72 @@
+.navbar{
+    background-color: rgb(68 69 68);
+    padding: 1px;
+    display: flex;
+    color: white;
+}
+
+.navbar {
+    background-color: #333;
+    padding: 1rem;
+    text-align: center;
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    padding: 0;
+    margin: 0;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.navbar {
+    background-color: #1f2937; /* Tailwind's gray-800 */
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;
+}
+
+.navbar a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.navbar a:hover {
+    color: #60a5fa; /* Tailwind's blue-400 */
+    transform: scale(1.05);
+}
+
+.icon{
+    width: 2rem;
+    height: 2rem;
+}
+
+.button{
+    width: 100px;
+    height: 40px;
+    border: 5px;
+    border-radius: 5px;
+    margin-left: 400px;
+    background-color: yellow;
+}
+
+
+
