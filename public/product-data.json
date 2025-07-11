@@ -2,7 +2,7 @@
   {
     "id": 1,
     "name": "Spinach",
-    "price": "200",
+    "price": "300",
     "currency": "LKR",
     "image": "spinach.jpg"
   },
@@ -22,7 +22,7 @@
   },
   {
     "id": 4,
-    "name": "Beans",
+    "name": "Banana",
     "price": "150",
     "currency": "LKR",
     "image": "banana.jpg"

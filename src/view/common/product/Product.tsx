@@ -1,24 +1,25 @@
-import { ModifyCart } from "../ModifyCart/ModifyCart.tsx";
-import { useState } from "react";
+import {useState} from "react";
+import {ModifyCart} from "../ModifyCart/ModifyCart.tsx";
+import type {ProductData} from "../../../model/ProductData.ts";
 
-type ProductData = {
-    id: number;
-    name: string;
-    price: string;
-    currency: string;
-    image: string;
-};
+// type ProductData = {
+//     id: number,
+//     name: string,
+//     price: number,
+//     currency: string,
+//     image: string
+// }
 
 type ProductProps = {
-    data: ProductData;
-};
+    data: ProductData
+}
 
-const images: Record<string, string> = import.meta.glob('../../../assets/products/*', {
-    eager: true,
-    import: 'default',
-});
+const images: Record<string, string> = import.meta.glob('../../../assets/products/*',
+    {eager: true, import: 'default'});
 
-export function Product({ data }: ProductProps) {
+export function Product({data}: ProductProps) {
+    // console.log(images);
+    // console.log(`../../../assets/images/products/${data.image}`)
     const image = images[`../../../assets/products/${data.image}`];
 
     const [isActive, setIsActive] = useState(false);
@@ -28,37 +29,39 @@ export function Product({ data }: ProductProps) {
     };
 
     return (
-        <div className="w-30 h-36 mr-2 mb-2 justify-center items-center border-gray-500 border-[0.5px]">
-            <div>
-                <img className="h-[100px] w-[200px]" src={image} alt="" />
-            </div>
-            <div className="flex">
+        <>
+            <div
+                className="w-45 h-50 mr-2 mb-5 gap-2.5
+                                rounded-2xl shadow-xl/30 flex flex-col justify-center items-center"
+            >
                 <div>
-                    <h3 className="text-[#1f9e4b] text-[12px] pl-2">{data.name}</h3>
+                    <img src={image} alt="" className="w-20 h-20"/>
                 </div>
-                <div className="bg-yellow-300 ml-1 p-[0.3px] rounded-lg pr-2">
-                    <h3 className="text-[12px] pl-1">
-                        {data.price} <small className="text-[7px]">{data.currency}</small>
-                    </h3>
+                <div className='flex items-center'>
+                    <h3 className='text-[16px] text-[#333] pl-2 text-lg'>{data.name}</h3>
+                    <div className='bg-yellow-300 py-0.5 px-[5px] rounded-lg ml-2'>
+                        <h3>{data.price}
+                            <small>{data.currency}</small>
+                        </h3>
+                    </div>
+                </div>
+                <div>
+                    {
+                        isActive ? (
+                            <ModifyCart data={{
+                                product:data
+                            }}/>
+                        ):(
+                            <button
+                                className='bg-green-600 border-0 rounded-[10px] mt-[8px] p-2
+                                   cursor-pointer text-white hover:bg-green-700'
+                                onClick={addToCart}>
+                                Add to Cart
+                            </button>
+                        )
+                    }
                 </div>
             </div>
-            <div className="flex justify-center">
-                {isActive ? (
-                    <ModifyCart
-                        data={{
-                            product: data,
-                            itemCount: 1,
-                        }}
-                    />
-                ) : (
-                    <button
-                        className="bg-blue-500 text-white text-[12px] px-2 py-1 rounded mt-2"
-                        onClick={addToCart}
-                    >
-                        Add to Cart
-                    </button>
-                )}
-            </div>
-        </div>
+        </>
     );
 }
