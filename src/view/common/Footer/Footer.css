@@ -1,18 +1,28 @@
-.footer{
-    background-color: rgb(68 69 68);
-    padding: 2px;
-}
 
 .footer {
-    background-color: #f1f5f9;
+    background-color: rgb(68 69 68);
+    color: white;
+    padding: 2rem;
+    justify-content: center;
+    align-items: center;
     text-align: center;
-    padding: 1rem;
-    font-size: 0.95rem;
-    color: #6b7280;
-    border-top: 1px solid #e5e7eb;
-    margin-top: 4rem;
+    font-size: 2rem;
+    display: flex;
 }
 
-.footer p {
-    margin: 0;
+.business-name {
+    padding-left: 5px;
+    color: #f0ecec;
+    padding-right: 5px;
+}
+
+.copyright {
+    color: #f0ecec;
+    font-size: 1.5rem;
+    padding-right: 10px;
+}
+
+.icon {
+    height: 3rem;
+    width: 3rem;
 }

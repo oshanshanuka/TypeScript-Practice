@@ -5,9 +5,9 @@ import {Footer} from "../Footer/Footer.tsx";
 export function DefaultLayout() {
     return (
         <>
-            <><Navbar/>
+            <Navbar/>
             <MainContent/>
-            <Footer/></>
+            <Footer/>
         </>
     );
 }

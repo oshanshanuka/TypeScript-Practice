@@ -1,67 +1,65 @@
-import {useState} from "react";
 import {ModifyCart} from "../ModifyCart/ModifyCart.tsx";
 import type {ProductData} from "../../../model/ProductData.ts";
-
-// type ProductData = {
-//     id: number,
-//     name: string,
-//     price: number,
-//     currency: string,
-//     image: string
-// }
+import {useDispatch, useSelector} from "react-redux";
+import type {AppDispatch, RootState} from "../../../store/store.ts";
+import {addItemToCart} from "../../../slice/cartSlice.ts";
 
 type ProductProps = {
     data: ProductData
 }
 
-const images: Record<string, string> = import.meta.glob('../../../assets/products/*',
+const images: Record<string, string>
+    = import.meta.glob(
+    '../../../assets/products/*',
     {eager: true, import: 'default'});
 
 export function Product({data}: ProductProps) {
-    // console.log(images);
-    // console.log(`../../../assets/images/products/${data.image}`)
     const image = images[`../../../assets/products/${data.image}`];
 
-    const [isActive, setIsActive] = useState(false);
-
+    const dispatch = useDispatch<AppDispatch>();
+    const item = useSelector(
+        (state: RootState) =>
+            state.cart.items.find(cartItem =>
+                cartItem.product.id === data.id));
+    // const [isActive, setIsActive] = useState(false);
     const addToCart = () => {
-        setIsActive(true);
-    };
+        dispatch(addItemToCart(data));
+        // setIsActive(true);
+    }
 
     return (
-        <>
-            <div
-                className="w-45 h-50 mr-2 mb-5 gap-2.5
-                                rounded-2xl shadow-xl/30 flex flex-col justify-center items-center"
-            >
+        <div className="w-[14rem] h-[17.2rem] mr-2 mb-2 justify-center items-center
+                               shadow-lg rounded-lg border border-green-300
+                               hover:bg-green-200">
+            <div>
+                <img className="h-[10rem] w-[10rem]"
+                     src={image} alt=""/>
+            </div>
+            <div className="flex mt-2">
                 <div>
-                    <img src={image} alt="" className="w-20 h-20"/>
+                    <h3 className="text-[#1f9e4b]
+                                          text-[2rem] pl-2 pr-2">
+                        {data.name}</h3>
                 </div>
-                <div className='flex items-center'>
-                    <h3 className='text-[16px] text-[#333] pl-2 text-lg'>{data.name}</h3>
-                    <div className='bg-yellow-300 py-0.5 px-[5px] rounded-lg ml-2'>
-                        <h3>{data.price}
-                            <small>{data.currency}</small>
-                        </h3>
-                    </div>
-                </div>
-                <div>
-                    {
-                        isActive ? (
-                            <ModifyCart data={{
-                                product:data
-                            }}/>
-                        ):(
-                            <button
-                                className='bg-green-600 border-0 rounded-[10px] mt-[8px] p-2
-                                   cursor-pointer text-white hover:bg-green-700'
-                                onClick={addToCart}>
-                                Add to Cart
-                            </button>
-                        )
-                    }
+                <div className="bg-yellow-300 ml-1 p-[0.3px] rounded-lg pr-2">
+                    <h3 className="text-[1.4rem] pl-1">{data.price}
+                        <small className="text-[0.8rem] pl-1">{data.currency}</small></h3>
                 </div>
             </div>
-        </>
+            <div className="flex justify-center">
+                {
+                    item ? (
+                        <ModifyCart data={data}/>
+                    ) : (
+                        <button className="w-full mt-4
+                            p-[0.5rem] bg-[#1f9e4b] text-[1rem]
+                            text-white border-gray-500 border-[0.5px] rounded-lg
+                            cursor-pointer"
+                                onClick={addToCart}>Add to Cart
+                        </button>
+                    )
+                }
+            </div>
+        </div>
     );
 }

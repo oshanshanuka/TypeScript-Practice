@@ -1,77 +1,70 @@
 import './Contact.css';
 import {useForm} from "react-hook-form";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+
 type FormData = {
     email: string;
     subject: string;
     message: string;
 }
+
 export function Contact() {
-    const {register,
-        handleSubmit,
-        formState: {errors}} = useForm();
 
-    const  onSubmit = (data: FormData) => {
-        console.log('Form submitted:', data);
-        alert(`Thank you for contacting us, ${data.subject}! We will get back to you soon.`);
-        // Here you can handle the form submission, e.g., send data to an API
+    const {register, handleSubmit, formState: { errors}}
+        = useForm<FormData>();
+
+    const onSubmit = (data: FormData) => {
+        console.log('Form data submitted: ', data);
+        alert(`Submitted your case: ${data.subject}`);
     }
-    return (
-        <div className="form-container">
-            <h2>Contact Us</h2>
-            <form className="contact-form"
-                  onSubmit = {handleSubmit(onSubmit)}>
 
+    return (
+        <div className="form-container shadow-lg shadow-green-300 border border-green-400">
+            <h2 className="text-5xl font-bold text-green-500 underline decoration-4 mb-6">Contact Us</h2>
+            <form className="contact-form"
+                  onSubmit={handleSubmit(onSubmit)}>
                 <div className="form-group">
-                    <label htmlFor="email">Email:</label>
+                    <label>Email: </label>
                     <input type="email"
-                           {
-                               ...register('email', {
-                                   required: 'Email is required',
-                                   pattern: {
-                                       value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                                       message: 'Invalid email address'
-                                   }
-                               })
-                           }
-                    />
+                           {...register('email', {
+                               required: 'Email is required',
+                               pattern: {
+                                   value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                                   message: 'Invalid email format'
+                               }
+                           })
+                           }/>
                     { errors.email ?
-                        <span className="error">{ errors.email.message }</span> : ' '}
+                        <span className="error">{errors.email.message}</span>
+                        : ''}
                 </div>
                 <div className="form-group">
-                    <label htmlFor="subject">Subject:</label>
+                    <label>Subject: </label>
                     <input type="text"
-                           {
-                               ...register('subject', {
-                                   required: 'Subject is required',
-                                   pattern: {
-                                       value: /^[a-zA-Z0-9\s]+$/,
-                                       message: 'Subject can only contain letters, numbers, and spaces'
-                                   },
-                                   minLength: {
-                                       value: 5,
-                                       message: 'Subject must be at least 5 characters long'
-                                   }
-                               })
-                           }
-                    />
+                           {...register('subject', {
+                               required: 'Subject is required',
+                               pattern: {
+                                   value: /^.{10,30}$/,
+                                   message: 'Subject must be ' +
+                                       'in between 10 to 30 characters'
+                               }
+                           })}/>
                     { errors.subject ?
-                        <span className="error">{ errors.subject.message }</span> : ' '}
+                        <span className="error">{errors.subject.message}</span>
+                        : ''}
                 </div>
                 <div className="form-group">
-                    <label htmlFor="message">Message:</label>
-                    <textarea id="messege" name="messege" required rows = "4" cols = "50" placeholder="Enter your message here..."
-                              {
-                                  ...register('message', {
-                                      required: true
-                                  })
-                              }
-                    >
-                    </textarea>
-                    { errors.messege ?
-                        <span className="error">{ errors.messege.message }</span> : ' '}
+                    <label>Message: </label>
+                    <textarea rows={5}
+                              {...register('message', {
+                                  required: true
+                              })}/>
+                    { errors.message ?
+                        <span className="error">
+                            Message is Required</span>
+                        : ''}
                 </div>
-                <button type="submit">Submit</button>
+                <button type="submit"
+                        className="submit-btn">Submit</button>
             </form>
         </div>
     );
